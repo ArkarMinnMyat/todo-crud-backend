@@ -42,7 +42,7 @@ public class TodoController {
         return ResponseEntity.ok(updatedTodo);
     }
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping
+    @DeleteMapping("{id}")
     public ResponseEntity<String> deleteTodo(@PathVariable("id") Long todoId){
         todoService.deleteTodo(todoId);
         return ResponseEntity.ok("Todo deleted successfully");
