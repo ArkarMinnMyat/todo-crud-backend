@@ -8,6 +8,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootApplication
 @RequiredArgsConstructor
@@ -16,6 +17,8 @@ public class TodoCrudBackendApplication {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+
+    @Transactional
     public ApplicationRunner runner(){
         return r -> {
             Role role1 = new Role();
@@ -34,7 +37,13 @@ public class TodoCrudBackendApplication {
             user2.setUsername("mary");
             user2.setPassword(passwordEncoder.encode("12345"));
             user2.setEmail("mary@gmail.com");
-        }
+
+            user1.getRoles().add(role1);
+            user2.getRoles().add(role2);
+
+            userRepository.save(user1);
+            userRepository.save(user2);
+        };
     }
 
     public static void main(String[] args) {
