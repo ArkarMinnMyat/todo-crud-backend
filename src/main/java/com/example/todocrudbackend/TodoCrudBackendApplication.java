@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,13 +20,15 @@ public class TodoCrudBackendApplication {
     private final PasswordEncoder passwordEncoder;
 
 
+    @Bean
     @Transactional
+    @Profile("data")
     public ApplicationRunner runner(){
         return r -> {
             Role role1 = new Role();
-            role1.setName("ADMIN");
+            role1.setName("ROLE_ADMIN");
             Role role2 = new Role();
-            role2.setName("USER");
+            role2.setName("ROLE_USER");
 
             User user1 = new User();
             user1.setName("John Doe");
